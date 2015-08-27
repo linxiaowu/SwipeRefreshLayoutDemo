@@ -11,6 +11,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setView();
+    }
+
+    private void setView() {
+        getFragmentManager().beginTransaction().add(R.id.fragmentLayout, BlankFragment.newInstance()).commit();
     }
 
     @Override
