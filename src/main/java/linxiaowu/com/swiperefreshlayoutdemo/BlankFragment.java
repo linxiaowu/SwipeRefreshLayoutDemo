@@ -3,6 +3,8 @@ package linxiaowu.com.swiperefreshlayoutdemo;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +64,16 @@ public class BlankFragment extends BaseListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ListView listView = (ListView) view.findViewById(R.id.listView);
-        ArrayAdapter arrayAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, TITLES);
-        listView.setAdapter(arrayAdapter);
+//        ListView listView = (ListView) view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+//        ArrayAdapter arrayAdapter = new ArrayAdapter<>(getActivity(),
+//                android.R.layout.simple_list_item_1, android.R.id.text1, TITLES);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(TITLES);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override

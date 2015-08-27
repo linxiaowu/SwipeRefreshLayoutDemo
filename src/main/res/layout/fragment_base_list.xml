@@ -6,8 +6,9 @@
     tools:context="linxiaowu.com.swiperefreshlayoutdemo.BaseListFragment">
 
 
-    <ListView
-        android:id="@+id/listView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 </android.support.v4.widget.SwipeRefreshLayout>
