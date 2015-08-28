@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-public abstract class BaseListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseListFragment extends Fragment {
 
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -59,21 +59,23 @@ public abstract class BaseListFragment extends Fragment implements SwipeRefreshL
 //                R.color.color1);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//            }
-//        });
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startTimeOut();
+                refresh();
+            }
+        });
+//        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewEndTarget(false, 200);
     }
 
-
-//    protected abstract void refresh();
-
-    @Override
-    public void onRefresh() {
+    protected void startTimeOut() {
         handler.removeCallbacks(refreshDone);
         handler.postDelayed(refreshDone, 15000);
     }
+
+
+    protected abstract void refresh();
+
 }
