@@ -75,10 +75,22 @@ public class BlankFragment extends BaseListFragment {
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(TITLES);
         recyclerView.setAdapter(recyclerAdapter);
     }
+//
+//    @Override
+//    protected void refresh() {
+//        Toast.makeText(getActivity(), "刷新", Toast.LENGTH_SHORT).show();
+//    }
 
     @Override
-    protected void refresh() {
+    public void onRefresh() {
+        super.onRefresh();
         Toast.makeText(getActivity(), "刷新", Toast.LENGTH_SHORT).show();
-    }
+//        try {
+//            Thread.sleep(3000);
+//            getSwipeRefreshLayout().setRefreshing(false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
+    }
 }
