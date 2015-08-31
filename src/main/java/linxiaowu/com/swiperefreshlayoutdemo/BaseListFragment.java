@@ -1,14 +1,12 @@
 package linxiaowu.com.swiperefreshlayoutdemo;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
 public abstract class BaseListFragment extends Fragment {
@@ -16,25 +14,6 @@ public abstract class BaseListFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-        return swipeRefreshLayout;
-    }
-
-    private final Runnable refreshDone = new Runnable() {
-        @Override
-        public void run() {
-            timeOut();
-        }
-    };
-
-    private void timeOut() {
-
-        swipeRefreshLayout.setRefreshing(false);
-        if (isAdded())
-            Toast.makeText(getActivity().getApplicationContext(), "超时", Toast.LENGTH_SHORT).show();
-    }
-
-    private Handler handler = new Handler();
 
     public BaseListFragment() {
     }
@@ -55,27 +34,32 @@ public abstract class BaseListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
-//        swipeRefreshLayout.setColorSchemeColors(
-//                R.color.color1);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                startTimeOut();
                 refresh();
             }
         });
-//        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewEndTarget(false, 200);
     }
 
-    protected void startTimeOut() {
-        handler.removeCallbacks(refreshDone);
-        handler.postDelayed(refreshDone, 15000);
-    }
-
-
     protected abstract void refresh();
+
+    public void setRefresh(boolean refreshing) {
+        if (swipeRefreshLayout != null) {
+            if (!refreshing) {
+                swipeRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            } else {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        }
+    }
 
 }
