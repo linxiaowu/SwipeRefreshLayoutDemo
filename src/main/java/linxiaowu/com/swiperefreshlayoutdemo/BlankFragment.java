@@ -46,6 +46,7 @@ public class BlankFragment extends BaseListFragment {
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(),"Click "+position,Toast.LENGTH_SHORT).show();
                 recyclerAdapter.notifyItemRemoved(position);
+                mlist.remove(position);
             }
         }));
     }
