@@ -62,20 +62,17 @@ public abstract class BaseListFragment extends Fragment {
 
     protected abstract void refresh();
 
-    public void setRefresh(boolean refreshing) {
+    public void setRefresh(final boolean refreshing) {
         if (swipeRefreshLayout != null) {
-            if (!refreshing) {
-                swipeRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1000);
-            } else {
-                swipeRefreshLayout.setRefreshing(true);
-            }
+            swipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(refreshing);
+                }
+            }, 1000);
         }
     }
+
 
     public void setAdapter(RecyclerAdapter recyclerAdapter) {
         mRecyclerView.setAdapter(recyclerAdapter);

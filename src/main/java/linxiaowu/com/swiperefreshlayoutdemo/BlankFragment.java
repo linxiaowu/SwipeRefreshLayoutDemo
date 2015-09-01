@@ -34,13 +34,15 @@ public class BlankFragment extends BaseListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setRefresh(true);
-                getData(1);
-            }
-        }, 365);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                setRefresh(true);
+//                getData(1);
+//            }
+//        }, 365);
+        setRefresh(true);
+        getData(1);
         getmRecyclerView().addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
