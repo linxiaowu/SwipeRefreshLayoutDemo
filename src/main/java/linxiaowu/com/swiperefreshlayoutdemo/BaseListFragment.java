@@ -4,6 +4,8 @@ package linxiaowu.com.swiperefreshlayoutdemo;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,16 @@ import android.view.ViewGroup;
 
 public abstract class BaseListFragment extends Fragment {
 
+    private RecyclerView mRecyclerView;
+
+    public RecyclerView getmRecyclerView() {
+        return mRecyclerView;
+    }
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-
     public BaseListFragment() {
+
     }
 
     @Override
@@ -43,6 +50,11 @@ public abstract class BaseListFragment extends Fragment {
             }
         });
         swipeRefreshLayout.setProgressViewEndTarget(false, 200);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
+
     }
 
     protected abstract void refresh();
@@ -60,6 +72,10 @@ public abstract class BaseListFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
+    }
+
+    public void setAdapter(RecyclerAdapter recyclerAdapter) {
+        mRecyclerView.setAdapter(recyclerAdapter);
     }
 
 }

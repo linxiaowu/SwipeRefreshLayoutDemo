@@ -2,11 +2,9 @@ package linxiaowu.com.swiperefreshlayoutdemo;
 
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
-import android.os.Handler;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,7 +20,6 @@ import linxiaowu.com.swiperefreshlayoutdemo.model.NetBaseBean;
 
 
 public class BlankFragment extends BaseListFragment {
-    private RecyclerView mRecyclerView;
     private List<HealthListBean.HealthBean> mlist;
     private RecyclerAdapter recyclerAdapter;
 
@@ -36,17 +33,21 @@ public class BlankFragment extends BaseListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecyclerView.setLayoutManager(layoutManager);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 setRefresh(true);
+                getData(1);
             }
         }, 365);
-        getData(1);
+        getmRecyclerView().addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(),"Click "+position,Toast.LENGTH_SHORT).show();
+                recyclerAdapter.notifyItemRemoved(position);
+            }
+        }));
     }
 
     @Override
@@ -67,7 +68,7 @@ public class BlankFragment extends BaseListFragment {
                     if (index == 1) {
                         mlist = response.getAppHealthList();
                         recyclerAdapter = new RecyclerAdapter(mlist);
-                        mRecyclerView.setAdapter(recyclerAdapter);
+                        setAdapter(recyclerAdapter);
                     } else {
                         mlist.addAll(response.getAppHealthList());
                         recyclerAdapter.notifyDataSetChanged();
