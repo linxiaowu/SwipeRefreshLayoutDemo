@@ -2,7 +2,7 @@ package linxiaowu.com.swiperefreshlayoutdemo;
 
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,24 +33,16 @@ public class BlankFragment extends BaseListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                setRefresh(true);
-//                getData(1);
-//            }
-//        }, 365);
         setRefresh(true);
         getData(1);
-        getmRecyclerView().addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(),"Click "+position,Toast.LENGTH_SHORT).show();
-                recyclerAdapter.notifyItemRemoved(position);
-                mlist.remove(position);
-            }
-        }));
+    }
+
+    @Override
+    public void onListItemClick(RecyclerView view, View itemView, int position) {
+        super.onListItemClick(view, itemView, position);
+        Toast.makeText(getActivity(), "Click " + position, Toast.LENGTH_SHORT).show();
+        recyclerAdapter.notifyItemRemoved(position);
+        mlist.remove(position);
     }
 
     @Override

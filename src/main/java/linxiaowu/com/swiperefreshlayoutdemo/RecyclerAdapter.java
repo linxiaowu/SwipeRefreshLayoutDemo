@@ -3,7 +3,6 @@ package linxiaowu.com.swiperefreshlayoutdemo;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,17 +25,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         imageLoder = DefaultImageLoader.getInstance();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(View view, int position);
-    }
-
-    private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickLitener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -54,26 +42,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         viewHolder.time.setText(time);
         String path = NetworkAPIs.IMAGE_URL + NetworkUtils.imageUrl(appKnowledge.PHOTO);
         imageLoder.get(path, NetworkUtils.getImageListener(viewHolder.knowledge_icon));
-//        if (mOnItemClickListener != null) {
-//            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = viewHolder.getLayoutPosition();
-//                    mOnItemClickListener.onItemClick(viewHolder.itemView, pos);
-//                }
-//            });
-//
-//            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    int pos = viewHolder.getLayoutPosition();
-//                    mOnItemClickListener.onItemLongClick(viewHolder.itemView, pos);
-//                    return false;
-//                }
-//            });
-//        }
-
-
     }
 
     @Override
